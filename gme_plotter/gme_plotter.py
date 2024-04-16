@@ -186,23 +186,24 @@ def main_plotter(mercato):
     
     fig.canvas.draw()
     fig.canvas.flush_events()
-    fig.savefig(export_path+'/'+str(today)+'_'+mercato+'.png')
+    fig.savefig(export_path+'/'+str(today)[0:11]+'_'+mercato+'.png')
     return()
 
 
 def gme_datalogger(mercato):
     now = datetime.now()
     today = str(now)[0:11]
-    if today[0:11] != str(now)[0:11]: 
-        plt.close(fig)
-        today = str(now)[0:11]
-        
-    while today[0:11] == str(now)[0:11]:
-        now = datetime.now()
-        print(now)
-        main_plotter(mercato)
-        time.sleep(3600)
-        plt.close(fig)
+    while True:
+        if today[0:11] != str(now)[0:11]: 
+            plt.close(fig)
+            today = str(now)[0:11]
+
+        while today[0:11] == str(now)[0:11]:
+            now = datetime.now()
+            print('GME plotter ', mercato, ' inserimento ora: ', now)
+            main_plotter(mercato)
+            time.sleep(14400)
+            plt.close(fig)
     return
     
 while True:
